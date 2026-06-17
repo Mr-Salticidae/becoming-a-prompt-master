@@ -67,6 +67,8 @@
     color:var(--muted); font:inherit; font-size:14px; transition:border-color .2s ease, color .2s ease}
   .like:hover{border-color:var(--neg)}
   .like svg{width:18px; height:18px; overflow:visible}
+  .like-count{font-size:13px; font-variant-numeric:tabular-nums; color:inherit; min-width:6px}
+  .like.liked{cursor:default}
   .like svg path{fill:none; stroke:var(--neg); stroke-width:1.7; transition:fill .25s ease}
   .like.liked{color:var(--neg)}
   .like.liked svg path{fill:var(--neg)}
@@ -156,9 +158,10 @@
         <button class="btn note-btn" data-folder="01_对话" data-file="对话_笔记.md" data-title="第 1 期《对话》· 小白笔记"><span class="ic">▤</span>小白笔记</button>
         <a class="btn" href="http://xhslink.com/o/7bGNayYvE4f" target="_blank" rel="noopener"><span class="ic">↗</span>小红书原帖</a>
         <span class="spacer"></span>
-        <button class="like" data-key="like_ep01" aria-label="点赞">
+        <button class="like" data-counter="ep01" aria-label="点赞">
           <svg viewBox="0 0 24 24"><path d="M12 20.5C5.5 16 3 12.5 3 9.2 3 6.6 5 4.7 7.4 4.7c1.6 0 3 .8 3.8 2.1.2.3.6.3.8 0 .8-1.3 2.2-2.1 3.8-2.1C21 4.7 23 6.6 23 9.2c0 3.3-2.5 6.8-9 11.3-.6.4-1.4.4-2 0z" transform="translate(-1,0)"/></svg>
           <span class="like-txt">喜欢</span>
+          <span class="like-count" aria-hidden="true"></span>
         </button>
       </div>
 
@@ -233,20 +236,26 @@
     });
   });
 
-  // 点赞(本地记忆 + 轻动画)
+  // 点赞(全局计数:Abacus serverless · 每浏览器一次 · 轻动画)
   var heartSVG='<svg viewBox="0 0 24 24"><path d="M12 20.5C5.5 16 3 12.5 3 9.2 3 6.6 5 4.7 7.4 4.7c1.6 0 3 .8 3.8 2.1.2.3.6.3.8 0 .8-1.3 2.2-2.1 3.8-2.1C21 4.7 23 6.6 23 9.2c0 3.3-2.5 6.8-9 11.3-.6.4-1.4.4-2 0z" transform="translate(-1,0)"/></svg>';
+  var ABACUS='https://abacus.jasoncameron.dev', NS='becoming-a-prompt-master';
   document.querySelectorAll('.like').forEach(function(btn){
-    var key=btn.dataset.key, txt=btn.querySelector('.like-txt');
-    if(localStorage.getItem(key)==='1'){ btn.classList.add('liked'); txt.textContent='已喜欢'; }
+    var counter=btn.dataset.counter, txt=btn.querySelector('.like-txt'), cnt=btn.querySelector('.like-count');
+    var likedKey='liked_'+counter, liked=localStorage.getItem(likedKey)==='1';
+    function setCount(n){ cnt.textContent = (typeof n==='number' && n>0) ? n : ''; }
+    if(liked){ btn.classList.add('liked'); txt.textContent='已喜欢'; }
+    // 读取全局计数
+    fetch(ABACUS+'/get/'+NS+'/'+counter).then(function(r){ return r.ok?r.json():{value:0}; })
+      .then(function(d){ setCount(d.value||0); }).catch(function(){});
     btn.addEventListener('click',function(){
-      var liked=btn.classList.toggle('liked');
-      localStorage.setItem(key, liked?'1':'0');
-      txt.textContent=liked?'已喜欢':'喜欢';
-      if(liked){
-        btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
-        var fh=document.createElement('span'); fh.className='float-heart'; fh.innerHTML=heartSVG;
-        btn.appendChild(fh); setTimeout(function(){ fh.remove(); },900);
-      }
+      if(btn.classList.contains('liked')) return;            // 一次性,不重复计
+      btn.classList.add('liked'); txt.textContent='已喜欢'; localStorage.setItem(likedKey,'1');
+      btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+      var fh=document.createElement('span'); fh.className='float-heart'; fh.innerHTML=heartSVG;
+      btn.appendChild(fh); setTimeout(function(){ fh.remove(); },900);
+      setCount((parseInt(cnt.textContent,10)||0)+1);          // 乐观 +1
+      fetch(ABACUS+'/hit/'+NS+'/'+counter).then(function(r){ return r.json(); })
+        .then(function(d){ if(d&&typeof d.value==='number') setCount(d.value); }).catch(function(){});
     });
   });
 })();
