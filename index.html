@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>目标是成为 Prompt 大师</title>
+<meta name="description" content="面向 AIGC 小白的 prompt 拆解系列:每期一个主题,讲清难在哪、怎么破题、完整 prompt 与四层拆解。不追结果,记录过程。">
+<style>
+  :root{
+    --bg:#F4EEE7; --ink:#2F2D2A; --muted:#8C8479; --hair:#D5CBBE; --card:#FBF7F1;
+    --narr:#2E8B73; --style:#6A6FB5; --trans:#C68A33; --neg:#BF5638;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.8; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:0 24px}
+
+  /* 刊头 */
+  header{text-align:center; padding:72px 24px 40px}
+  .masthead{display:flex; align-items:center; justify-content:center; gap:18px;
+    color:var(--muted); font-size:13px; letter-spacing:.34em; margin-bottom:30px}
+  .masthead::before,.masthead::after{content:""; width:54px; height:1px; background:var(--hair)}
+  h1{font-size:clamp(34px,7vw,60px); font-weight:600; letter-spacing:.08em}
+  .tagline{color:var(--muted); margin-top:16px; font-size:15px; letter-spacing:.02em}
+  .accent{display:flex; justify-content:center; gap:10px; margin-top:26px}
+  .accent span{width:46px; height:5px; border-radius:3px}
+
+  /* 引言 */
+  .intro{max-width:680px; margin:8px auto 0; text-align:center; color:#5f5a52; font-size:15.5px; padding:0 24px}
+
+  /* 期目 */
+  .episodes{padding:56px 0 24px}
+  .ep{border-top:1px solid var(--hair); padding:48px 0}
+  .ep-head{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px}
+  .ep-no{color:var(--muted); font-size:13px; letter-spacing:.18em}
+  .ep-title{font-size:28px; font-weight:600; letter-spacing:.04em}
+  .ep-sub{color:var(--muted); font-size:15px; margin-bottom:26px}
+
+  .gallery{display:grid; grid-template-columns:repeat(2,1fr); gap:20px}
+  @media(max-width:640px){.gallery{grid-template-columns:1fr}}
+  figure{margin:0; cursor:zoom-in}
+  figure img{width:100%; height:auto; display:block; border-radius:12px;
+    border:1px solid var(--hair); transition:transform .25s ease, box-shadow .25s ease}
+  figure img:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(80,60,40,.14)}
+  figcaption{text-align:center; color:var(--muted); font-size:13px; margin-top:10px}
+
+  .links{display:flex; flex-wrap:wrap; gap:12px; margin-top:28px}
+  .links a{
+    text-decoration:none; color:var(--ink); font-size:14px;
+    border:1px solid var(--hair); border-radius:999px; padding:8px 18px;
+    transition:background .2s ease, border-color .2s ease}
+  .links a:hover{background:#fff; border-color:var(--muted)}
+  .links a i{font-style:normal; color:var(--muted); margin-right:6px}
+
+  footer{border-top:1px solid var(--hair); margin-top:40px; padding:40px 24px 64px; text-align:center; color:var(--muted); font-size:13px}
+  footer a{color:var(--trans); text-decoration:none}
+
+  /* 灯箱 */
+  .lb{position:fixed; inset:0; background:rgba(35,30,26,.86); display:none;
+    align-items:center; justify-content:center; padding:28px; z-index:50; cursor:zoom-out}
+  .lb.open{display:flex}
+  .lb img{max-width:100%; max-height:100%; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,.4)}
+</style>
+</head>
+<body>
+<header>
+  <div class="masthead">目标是成为 PROMPT 大师</div>
+  <h1>目标是成为 Prompt 大师</h1>
+  <p class="tagline">面向 AIGC 小白的 prompt 拆解系列 · 不追结果,记录过程</p>
+  <div class="accent">
+    <span style="background:var(--narr)"></span>
+    <span style="background:var(--style)"></span>
+    <span style="background:var(--trans)"></span>
+    <span style="background:var(--neg)"></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="intro">
+    每一期挑一个 prompt battle 主题,讲清楚四件事:难在哪 → 怎么破题 → 完整 prompt → 四层拆解与可复用的思路。
+    每张图都可以直接看,完整笔记可独立阅读,不需要任何前置知识。
+  </p>
+
+  <section class="episodes">
+    <article class="ep" id="ep01">
+      <div class="ep-head">
+        <span class="ep-no">第 1 期</span>
+        <span class="ep-title">《对话》</span>
+      </div>
+      <p class="ep-sub">不画两个人说话,让两个时代做同一个动作——书写。</p>
+
+      <div class="gallery">
+        <figure>
+          <img src="01_对话/对话_封面卡.png" alt="《对话》封面" loading="lazy">
+          <figcaption>封面</figcaption>
+        </figure>
+        <figure>
+          <img src="01_对话/对话_prompt拆解卡.png" alt="《对话》prompt 四层拆解" loading="lazy">
+          <figcaption>prompt 四层拆解</figcaption>
+        </figure>
+      </div>
+
+      <div class="links">
+        <a href="https://github.com/Mr-Salticidae/becoming-a-prompt-master/blob/main/01_对话/对话_笔记.md"><i>›</i>小白笔记</a>
+        <a href="https://github.com/Mr-Salticidae/becoming-a-prompt-master/blob/main/01_对话/对话_小红书正文.md"><i>›</i>小红书正文</a>
+        <a href="01_对话/对话_原图.png"><i>›</i>查看原图</a>
+      </div>
+    </article>
+  </section>
+</main>
+
+<footer>
+  源文件与每期归档 · <a href="https://github.com/Mr-Salticidae/becoming-a-prompt-master">GitHub 仓库</a><br>
+  © 目标是成为 Prompt 大师
+</footer>
+
+<div class="lb" id="lb"><img id="lb-img" src="" alt=""></div>
+<script>
+  var lb=document.getElementById('lb'), lbImg=document.getElementById('lb-img');
+  document.querySelectorAll('figure img').forEach(function(im){
+    im.addEventListener('click',function(){ lbImg.src=im.src; lb.classList.add('open'); });
+  });
+  lb.addEventListener('click',function(){ lb.classList.remove('open'); lbImg.src=''; });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ lb.classList.remove('open'); lbImg.src=''; }});
+</script>
+</body>
+</html>
