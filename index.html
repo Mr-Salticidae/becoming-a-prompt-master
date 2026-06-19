@@ -248,7 +248,7 @@
 
   /* ---------- 详情页 ---------- */
   function renderDetail(e){
-    var xhsBtn = e.xhs ? '<a class="btn" href="'+e.xhs+'" target="_blank" rel="noopener"><span class="ic">↗</span>小红书原帖</a>' : '';
+    var xhsBtn = e.xhs ? '<a class="btn" href="'+e.xhs+'" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"><span class="ic">↗</span>小红书原帖</a>' : '';
     detailBody.innerHTML =
       '<article class="ep" data-folder="'+e.folder+'">'+
         '<div class="ep-head"><span class="ep-no">'+esc(e.no)+'</span><span class="ep-title">'+esc(e.title)+'</span></div>'+
