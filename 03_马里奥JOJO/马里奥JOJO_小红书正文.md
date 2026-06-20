@@ -2,7 +2,7 @@
 
 > 封版 v1.0 · 2026-06-20 · 风格:内敛克制,不写名次 / 不署名
 > 配图顺序:① 封面卡 ② prompt 拆解卡(原图可按需补在中间)
-> 帖子链接:https://www.xiaohongshu.com/discovery/item/6a366a71000000001702c9e8
+> 帖子链接:https://www.xiaohongshu.com/discovery/item/6a366a71000000001702c9e8?source=webshare&xhsshare=pc_web&xsec_token=ABaxlBVPILT6qQ-8sojkXjP1f-0Rc4LbklXHPCRo1azpc=&xsec_source=pc_share
 > 实际采用标题:马里奥 但是张力这一块
 
 ---
