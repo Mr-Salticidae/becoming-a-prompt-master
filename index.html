@@ -196,7 +196,8 @@
     object:  {name:"物件与尺度", color:"var(--trans)"},
     style:   {name:"画风与张力", color:"var(--style)"},
     surreal: {name:"超现实破题", color:"var(--neg)"},
-    irony:   {name:"概念反讽",   color:"#b06a78"}
+    irony:   {name:"概念反讽",   color:"#b06a78"},
+    readable: {name:"可读性校准", color:"#5b8a9e"}
   };
   var EPISODES = [
     {
@@ -261,6 +262,15 @@
       note:"幻想家_笔记.md", noteTitle:"第 7 期《深夜幻想家》· 小白笔记",
       xhs:"https://www.xiaohongshu.com/discovery/item/6a3b2069000000001603efb5?source=webshare&xhsshare=pc_web&xsec_token=ABfZnBFy6TuVlAp3IcRGneAsgXya2NIyJGBYdPsZ9Bvts=&xsec_source=pc_share",
       prompt:"cinematic photograph, a convenience store at 3am, glossy tiled floor, a tired night-shift cleaner in uniform leaning on his mop, head bowed, small and weary, a single hard light throws his huge shadow onto the clean bright wall behind him, the wall shadow transforms into a proud towering knight in a flowing cape, both hands resting on a great planted sword, the mop handle becoming the sword, crisp sharp-edged shadow, high contrast, clean readable wall, warm amber light, photographic, fine film grain --ar 3:4 --v 8.1 --style raw --no text, watermark, logo, blurry shadow, matching shadow, haze, floating dream imagery, stars"
+    },
+    {
+      id:"ep08", no:"第 8 期", title:"《零票神图》", cat:"readable",
+      sub:"一张我超满意的图,比赛 0 票——美不是入场票,「一眼看懂」才是;附一个冷读者 0.5 秒自测。",
+      folder:"08_零票神图",
+      cover:"零票神图_封面卡.png", breakdown:"零票神图_冷读者测试卡.png", breakdownLabel:"冷读者 0.5 秒测试", original:"零票神图_原图.png",
+      note:"零票神图_笔记.md", noteTitle:"第 8 期《零票神图》· 小白笔记",
+      xhs:"",
+      prompt:"flat editorial illustration, retrofuturism mid-century, a supermarket shelf lined with vacuum-sealed plastic packs each holding a square of bright blue sky and white clouds, plain blank price tags left empty, a shopper's hand reaching for one, clean optimistic pastel palette teal coral cream, halftone screen-print texture --no photorealistic, 3d render, text, letters, numbers, garbled characters, fake script, watermark, signature, caption --ar 3:2"
     }
   ];
   /* ============================================================================ */
@@ -303,7 +313,7 @@
         '<p class="ep-sub">'+esc(e.sub)+'</p>'+
         '<div class="gallery">'+
           '<figure><img src="'+e.folder+'/'+e.cover+'" alt="'+esc(e.title)+'封面" loading="lazy"><figcaption>封面</figcaption></figure>'+
-          '<figure><img src="'+e.folder+'/'+e.breakdown+'" alt="prompt 四层拆解" loading="lazy"><figcaption>prompt 四层拆解</figcaption></figure>'+
+          '<figure><img src="'+e.folder+'/'+e.breakdown+'" alt="'+esc(e.breakdownLabel||'prompt 四层拆解')+'" loading="lazy"><figcaption>'+esc(e.breakdownLabel||'prompt 四层拆解')+'</figcaption></figure>'+
         '</div>'+
         '<figure class="original"><img src="'+e.folder+'/'+e.original+'" alt="'+esc(e.title)+'原图" loading="lazy">'+
           '<figcaption>原图 · 点击放大,或 <a href="'+e.folder+'/'+e.original+'" download>下载原图</a></figcaption></figure>'+
